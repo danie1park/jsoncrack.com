@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import type { CustomNodeProps } from ".";
 import { NODE_DIMENSIONS } from "../../../../../constants/graph";
 import type { NodeData } from "../../../../../types/graph";
@@ -29,10 +30,23 @@ const Row = ({ row, x, y, index }: RowProps) => {
       data-y={y + rowPosition}
     >
       <Styled.StyledKey $type="object">{row.key}: </Styled.StyledKey>
+      {row.key === "color" && typeof row.value === "string" ? (
+        <ColorSwatch style={{ background: String(row.value) }} aria-hidden />
+      ) : null}
       <TextRenderer>{getRowText()}</TextRenderer>
     </Styled.StyledRow>
   );
 };
+
+const ColorSwatch = styled.span`
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin: 0 4px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  vertical-align: middle;
+`;
 
 const Node = ({ node, x, y }: CustomNodeProps) => (
   <Styled.StyledForeignObject
